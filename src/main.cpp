@@ -10,9 +10,10 @@
 
 const gpio_num_t ledPin = GPIO_NUM_21;
 
-TaskHandle_t thp[6]; // マルチスレッドのタスクハンドル格納用
+TaskHandle_t thp[5]; // マルチスレッドのタスクハンドル格納用
+QueueHandle_t queue; // タスク間通信 キュー
 
-// object
+// object作成
 ObjectA objA;
 ObjectB objB;
 ObjectC objC;
@@ -64,59 +65,47 @@ void setup()
   // digitalWrite(ledPin, LOW);
   dispHY.clearFullPage();
 
-  xTaskCreatePinnedToCore(taskA, "taskA", 4096, NULL, 1, &thp[0], 0);
-  xTaskCreatePinnedToCore(taskB, "taskB", 4096, NULL, 2, &thp[1], 0);
+  // タスク間通信 キュー作成
+  queue = xQueueCreate(1, sizeof(int));
+
+  xTaskCreatePinnedToCore(taskA, "taskA", 4096, NULL, 5, &thp[0], 0);
+  xTaskCreatePinnedToCore(taskB, "taskB", 4096, NULL, 4, &thp[1], 0);
   xTaskCreatePinnedToCore(taskC, "taskC", 4096, NULL, 3, &thp[2], 0);
-  xTaskCreatePinnedToCore(taskD, "taskD", 4096, NULL, 4, &thp[3], 0);
-  xTaskCreatePinnedToCore(taskE, "taskE", 4096, NULL, 5, &thp[4], 0);
+  xTaskCreatePinnedToCore(taskD, "taskD", 4096, NULL, 2, &thp[3], 0);
+  xTaskCreatePinnedToCore(taskE, "taskE", 4096, NULL, 1, &thp[4], 0);
+
+  Serial.println("-------------------------------------------------");
+  objA.setEnable();
 }
 
 void loop(void)
 {
-  static char sample_mum = 1;
-  switch (sample_mum)
+  int num;
+
+  // タスク終了をキューで受け取る
+  if (xQueueReceive(queue, &num, 0))
   {
-  case 1:
-    objA.setEnable(true);
-    while (objA.status())
+    //Serial.printf("Num:%d Receive\n", num);
+    switch (num)
     {
-      delay(1);
+    case 1:
+      objB.setEnable();
+      break;
+    case 4:
+      objC.setEnable();
+      break;
+    case 7:
+      objD.setEnable();
+      break;
+    case 8:
+      objE.setEnable();
+      break;
+    case 9:
+      dispHY.clearFullPage();
+      delay(3000);
+      objA.setEnable();
+      break;
     }
-    break;
-  case 2:
-    objB.setEnable(true);
-    while (objB.status())
-    {
-      delay(1);
-    }
-    break;
-  case 3:
-    objC.setEnable(true);
-    while (objC.status())
-    {
-      delay(1);
-    }
-    break;
-  case 4:
-    objD.setEnable(true);
-    while (objD.status())
-    {
-      delay(1);
-    }
-    break;
-  case 5:
-    objE.setEnable(true);
-    while (objE.status())
-    {
-      delay(1);
-    }
-    break;
-  }
-  if (++sample_mum > 5)
-  {
-    sample_mum = 1;
-    dispHY.clearFullPage();
-    delay(3000);
   }
 }
 void taskA(void *args)

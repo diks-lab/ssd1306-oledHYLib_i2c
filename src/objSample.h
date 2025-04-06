@@ -7,13 +7,13 @@ public:
   ~ObjectA() {};
   void init(int num);
   void run(void);
-  void setEnable(bool enable) { _enabled = enable; }
+  void setEnable() { _enabled = true; }
   bool status(void){return _enabled;}
 
 private:
   void dispOled(int attr);
   bool _enabled = false;
-  int _num = 1;
+  int _num ;
 };
 
 class ObjectB {
@@ -22,13 +22,13 @@ public:
   ~ObjectB() {};
   void init(int num);
   void run(void);
-  void setEnable(bool enable) { _enabled = enable; }
+  void setEnable() { _enabled = true; }
   bool status(void){return _enabled; }
 
 private:
   void dispOled(int attr);
   bool _enabled = false;
-  int _num = 1;
+  int _num ;
 };
 
 class ObjectC {
@@ -37,13 +37,13 @@ public:
   ~ObjectC() {};
   void init(int num);
   void run(void);
-  void setEnable(bool enable) { _enabled = enable; }
+  void setEnable() { _enabled = true; }
   bool status(void){return _enabled; }
 
 private:
   void dispOled(void);
   bool _enabled = false;
-  int _num = 1;
+  int _num ;
 };
 
 class ObjectD {
@@ -52,13 +52,13 @@ public:
   ~ObjectD() {};
   void init(int num);
   void run(void);
-  void setEnable(bool enable) { _enabled = enable; }
+  void setEnable() { _enabled = true; }
   bool status(void){return _enabled; }
 
 private:
   void dispOled(void);
   bool _enabled = false;
-  int _num = 1;
+  int _num ;
 };
 
 class ObjectE {
@@ -67,12 +67,12 @@ public:
   ~ObjectE() {};
   void init(int num);
   void run(void);
-  void setEnable(bool enable) { _enabled = enable; }
+  void setEnable() { _enabled = true; }
   bool status(void){return _enabled; }
 
 private:
   void dispOled(void);
   void sub_drawberX( int lv , int y );
   bool _enabled = false;
-  int _num = 1;
+  int _num ;
 };
