@@ -8,10 +8,9 @@ public:
   ~baseObject() {};
   void init(int num) { _num = num; }
   void setEnable(bool enable) { _enabled = enable; }
-  int getNum(void) { return _num; }
   bool status(void) { return _enabled; }
 
-private:
+protected:
   bool _enabled = false;
   int _num;
 };

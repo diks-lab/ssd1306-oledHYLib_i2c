@@ -9,14 +9,13 @@ void ObjectA::run()
   {
     if (status())
     {
-      int num = getNum();
       for (int i = 0; i < 3; i++)
       {
-        dispOled(num + i);
+        dispOled(_num + i);
         delay(500);
       }
-      xQueueSend(queue, &num, (TickType_t)0);
-      setEnable(false);
+      xQueueSend(queue, &_num, (TickType_t)0);
+      _enabled = false;
     }
     delay(1);
   }
@@ -45,14 +44,13 @@ void ObjectB::run()
   {
     if (status())
     {
-      int num = getNum();
       for (int i = 0; i < 3; i++)
       {
-        dispOled(num + i);
+        dispOled(_num + i);
         delay(500);
       }
-      xQueueSend(queue, &num, (TickType_t)0);
-      setEnable(false);
+      xQueueSend(queue, &_num, (TickType_t)0);
+      _enabled = false;
     }
     delay(1);
   }
@@ -81,10 +79,9 @@ void ObjectC::run()
   {
     if (status())
     {
-      int num = getNum();
-      dispOled(num);
-      xQueueSend(queue, &num, (TickType_t)0);
-      setEnable(false);
+      dispOled(_num);
+      xQueueSend(queue, &_num, (TickType_t)0);
+      _enabled = false;
     }
     delay(1);
   }
@@ -119,10 +116,9 @@ void ObjectD::run()
   {
     if (status())
     {
-      int num = getNum();
-      dispOled(num);
-      xQueueSend(queue, &num, (TickType_t)0);
-      setEnable(false);
+      dispOled(_num);
+      xQueueSend(queue, &_num, (TickType_t)0);
+      _enabled = false;
     }
     delay(1);
   }
@@ -157,10 +153,9 @@ void ObjectE::run()
   {
     if (status())
     {
-      int num = getNum();
-      dispOled(num);
-      xQueueSend(queue, &num, (TickType_t)0);
-      setEnable(false);
+      dispOled(_num);
+      xQueueSend(queue, &_num, (TickType_t)0);
+      _enabled = false;
     }
     delay(1);
   }
