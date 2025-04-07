@@ -3,27 +3,20 @@
 
 extern QueueHandle_t queue;
 
-void ObjectA::init(int num)
-{
-  _num = num;
-}
-
 void ObjectA::run()
 {
   while (1)
   {
-    if (_enabled)
+    if (status())
     {
-      // Serial.printf("ObjectA::num:%d start\n", _num);
+      int num = getNum();
       for (int i = 0; i < 3; i++)
       {
-        // Serial.printf("%2d+%d\n", _num, i);
-        dispOled(i);
+        dispOled(num + i);
         delay(500);
       }
-      // Serial.printf("ObjectA::num:%d queue send\n", _num);
-      xQueueSend(queue, &_num, (TickType_t)0);
-      _enabled = false;
+      xQueueSend(queue, &num, (TickType_t)0);
+      setEnable(false);
     }
     delay(1);
   }
@@ -33,7 +26,7 @@ void ObjectA::dispOled(int attr)
 {
   dispHY.clearRect(0, 2, 128, 6);
   dispHY.draw_stringHYm("# ", 0, 0, 6);
-  dispHY.draw_num_m(_num + attr, 12, 0, 6);
+  dispHY.draw_num_m(attr, 12, 0, 6);
 
   dispHY.draw_stringHYm("DrawString M/S", 24, 0, 6);
   for (int w = 5; w < 10; w++)
@@ -46,27 +39,20 @@ void ObjectA::dispOled(int attr)
   }
 }
 
-void ObjectB::init(int num)
-{
-  _num = num;
-}
-
 void ObjectB::run()
 {
   while (1)
   {
-    if (_enabled)
+    if (status())
     {
-      // Serial.printf("ObjectB::num:%d start\n", _num);
+      int num = getNum();
       for (int i = 0; i < 3; i++)
       {
-        // Serial.printf("%2d+%d\n", _num, i);
-        dispOled(i);
+        dispOled(num + i);
         delay(500);
       }
-      // Serial.printf("ObjectB::num:%d queue send\n", _num);
-      xQueueSend(queue, &_num, (TickType_t)0);
-      _enabled = false;
+      xQueueSend(queue, &num, (TickType_t)0);
+      setEnable(false);
     }
     delay(1);
   }
@@ -76,7 +62,7 @@ void ObjectB::dispOled(int attr)
 {
   dispHY.clearRect(0, 2, 128, 6);
   dispHY.draw_stringHYm("# ", 0, 0, 6);
-  dispHY.draw_num_m(_num + attr, 12, 0, 6);
+  dispHY.draw_num_m(attr, 12, 0, 6);
 
   dispHY.draw_stringHYm("DrawDualString M", 24, 0, 6);
   for (int w = 5; w < 9; w++)
@@ -89,32 +75,26 @@ void ObjectB::dispOled(int attr)
   }
 }
 
-void ObjectC::init(int num)
-{
-  _num = num;
-}
-
 void ObjectC::run()
 {
   while (1)
   {
-    if (_enabled)
+    if (status())
     {
-      // Serial.printf("ObjectC::num:%d start\n", _num);
-      dispOled();
-      // Serial.printf("ObjectC::num:%d queue send\n", _num);
-      xQueueSend(queue, &_num, (TickType_t)0);
-      _enabled = false;
+      int num = getNum();
+      dispOled(num);
+      xQueueSend(queue, &num, (TickType_t)0);
+      setEnable(false);
     }
     delay(1);
   }
 }
 
-void ObjectC::dispOled(void)
+void ObjectC::dispOled(int attr)
 {
   dispHY.clearRect(0, 2, 128, 6);
   dispHY.draw_stringHYm("# ", 0, 0, 6);
-  dispHY.draw_num_m(_num, 12, 0, 6);
+  dispHY.draw_num_m(attr, 12, 0, 6);
 
   dispHY.draw_stringHYm("DrawFont M", 24, 0, 6);
   for (int ch = 0x20; ch < 0x7f + 16; ch += 16)
@@ -133,32 +113,26 @@ void ObjectC::dispOled(void)
   }
 }
 
-void ObjectD::init(int num)
-{
-  _num = num;
-}
-
 void ObjectD::run()
 {
   while (1)
   {
-    if (_enabled)
+    if (status())
     {
-      // Serial.printf("ObjectD::num:%d start\n", _num);
-      dispOled();
-      xQueueSend(queue, &_num, (TickType_t)0);
-      _enabled = false;
-      // Serial.printf("ObjectD::num:%d queue send\n", _num);
+      int num = getNum();
+      dispOled(num);
+      xQueueSend(queue, &num, (TickType_t)0);
+      setEnable(false);
     }
     delay(1);
   }
 }
 
-void ObjectD::dispOled(void)
+void ObjectD::dispOled(int attr)
 {
   dispHY.clearRect(0, 2, 128, 6);
   dispHY.draw_stringHYm("# ", 0, 0, 6);
-  dispHY.draw_num_m(_num, 12, 0, 6);
+  dispHY.draw_num_m(attr, 12, 0, 6);
 
   dispHY.draw_stringHYm("DrawFont S", 24, 0, 6);
   for (int ch = 0x20; ch < 0x7f + 16; ch += 21)
@@ -177,32 +151,26 @@ void ObjectD::dispOled(void)
   }
 }
 
-void ObjectE::init(int num)
-{
-  _num = num;
-}
-
 void ObjectE::run()
 {
   while (1)
   {
-    if (_enabled)
+    if (status())
     {
-      // Serial.printf("ObjectE::num:%d start\n", _num);
-      dispOled();
-      // Serial.printf("ObjectE::num:%d queue send\n", _num);
-      xQueueSend(queue, &_num, (TickType_t)0);
-      _enabled = false;
+      int num = getNum();
+      dispOled(num);
+      xQueueSend(queue, &num, (TickType_t)0);
+      setEnable(false);
     }
     delay(1);
   }
 }
 
-void ObjectE::dispOled(void)
+void ObjectE::dispOled(int attr)
 {
   dispHY.clearRect(0, 2, 128, 6);
   dispHY.draw_stringHYm("# ", 0, 0, 6);
-  dispHY.draw_num_m(_num, 12, 0, 6);
+  dispHY.draw_num_m(attr, 12, 0, 6);
 
 #define PT0 0x08
 #define PT1 0x78

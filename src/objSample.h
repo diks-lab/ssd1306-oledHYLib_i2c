@@ -1,78 +1,63 @@
 #pragma once
 #include <Arduino.h>
 
-class ObjectA {
+class baseObject
+{
 public:
-  ObjectA() {};
-  ~ObjectA() {};
-  void init(int num);
+  baseObject() {};
+  ~baseObject() {};
+  void init(int num) { _num = num; }
+  void setEnable(bool enable) { _enabled = enable; }
+  int getNum(void) { return _num; }
+  bool status(void) { return _enabled; }
+
+private:
+  bool _enabled = false;
+  int _num;
+};
+
+class ObjectA : public baseObject
+{
+public:
   void run(void);
-  void setEnable() { _enabled = true; }
-  bool status(void){return _enabled;}
 
 private:
   void dispOled(int attr);
-  bool _enabled = false;
-  int _num ;
 };
 
-class ObjectB {
+class ObjectB : public baseObject
+{
 public:
-  ObjectB() {};
-  ~ObjectB() {};
-  void init(int num);
   void run(void);
-  void setEnable() { _enabled = true; }
-  bool status(void){return _enabled; }
 
 private:
   void dispOled(int attr);
-  bool _enabled = false;
-  int _num ;
 };
 
-class ObjectC {
+class ObjectC : public baseObject
+{
 public:
-  ObjectC() {};
-  ~ObjectC() {};
-  void init(int num);
   void run(void);
-  void setEnable() { _enabled = true; }
-  bool status(void){return _enabled; }
 
 private:
-  void dispOled(void);
-  bool _enabled = false;
-  int _num ;
+  void dispOled(int attr);
 };
 
-class ObjectD {
+class ObjectD : public baseObject
+{
 public:
-  ObjectD(){};
-  ~ObjectD() {};
-  void init(int num);
   void run(void);
-  void setEnable() { _enabled = true; }
-  bool status(void){return _enabled; }
 
 private:
-  void dispOled(void);
-  bool _enabled = false;
-  int _num ;
+  void dispOled(int attr);
 };
 
-class ObjectE {
+class ObjectE : public baseObject
+{
 public:
-  ObjectE() {};
-  ~ObjectE() {};
-  void init(int num);
   void run(void);
-  void setEnable() { _enabled = true; }
-  bool status(void){return _enabled; }
 
 private:
-  void dispOled(void);
-  void sub_drawberX( int lv , int y );
-  bool _enabled = false;
-  int _num ;
+  void dispOled(int attr);
+  void sub_drawberX(int lv, int y);
 };

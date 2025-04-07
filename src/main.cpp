@@ -75,7 +75,7 @@ void setup()
   xTaskCreatePinnedToCore(taskE, "taskE", 4096, NULL, 1, &thp[4], 0);
 
   Serial.println("-------------------------------------------------");
-  objA.setEnable();
+  objA.setEnable(true);
 }
 
 void loop(void)
@@ -85,25 +85,25 @@ void loop(void)
   // タスク終了をキューで受け取る
   if (xQueueReceive(queue, &num, 0))
   {
-    //Serial.printf("Num:%d Receive\n", num);
+    // Serial.printf("Num:%d Receive\n", num);
     switch (num)
     {
     case 1:
-      objB.setEnable();
+      objB.setEnable(true);
       break;
     case 4:
-      objC.setEnable();
+      objC.setEnable(true);
       break;
     case 7:
-      objD.setEnable();
+      objD.setEnable(true);
       break;
     case 8:
-      objE.setEnable();
+      objE.setEnable(true);
       break;
     case 9:
       dispHY.clearFullPage();
       delay(3000);
-      objA.setEnable();
+      objA.setEnable(true);
       break;
     }
   }
